@@ -1,0 +1,61 @@
+{
+  "pluginAlias": "AqaraLocal",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "Aqara devices in HomeKit and Matter, driven locally over the hub's own protocol. The account is used to sign in and to list what you own; everything after that stays on your network.",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "email": {
+        "title": "Aqara account",
+        "type": "string",
+        "required": true,
+        "format": "email"
+      },
+      "password": {
+        "title": "Password",
+        "type": "string",
+        "required": true,
+        "x-schema-form": { "type": "password" },
+        "description": "Sent as a hash encrypted with Aqara's own public key, and never stored: only the session token is kept."
+      },
+      "region": {
+        "title": "Region",
+        "type": "string",
+        "default": "EU",
+        "required": true,
+        "oneOf": [
+          { "title": "Europe", "enum": ["EU"] },
+          { "title": "Russia", "enum": ["RU"] },
+          { "title": "China", "enum": ["CN"] },
+          { "title": "United States", "enum": ["US"] },
+          { "title": "Korea", "enum": ["KR"] },
+          { "title": "Australia", "enum": ["AU"] }
+        ],
+        "description": "The region your Aqara account belongs to. The wrong one signs in but lists nothing."
+      },
+      "hub": {
+        "title": "Hub",
+        "type": "object",
+        "description": "Left empty, the hub is found on the network - which is the only reliable way, since the port it listens on changes every time it reboots.",
+        "properties": {
+          "deviceId": { "title": "Hub id", "type": "string" },
+          "host": { "title": "Address", "type": "string" },
+          "port": { "title": "Port", "type": "integer" }
+        }
+      },
+      "adaptiveLighting": {
+        "title": "Adaptive lighting",
+        "type": "boolean",
+        "default": true,
+        "description": "Let HomeKit move the colour temperature through the day on lamps that have both a dimmer and a colour temperature."
+      },
+      "enableMatter": {
+        "title": "Publish over Matter",
+        "type": "boolean",
+        "default": true,
+        "description": "Publish the same devices over Matter as well, for Alexa, SmartThings and the rest. Needs Matter enabled on the Homebridge bridge this plugin runs in."
+      }
+    }
+  }
+}

@@ -15,7 +15,9 @@
     "homebridge-plugin",
     "aqara",
     "matter",
-    "lanlink"
+    "lanlink",
+    "local"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "displayName": "Aqara Local"
 }

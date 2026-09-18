@@ -249,8 +249,20 @@ export class AqaraTunnel extends EventEmitter {
       this.pending.set(seq, { resolve, reject, timer });
     });
 
-    // Indented, as the hub's own serialiser writes it: a compact body is refused in silence.
-    await this.sendFrame(MSG_TYPE_SESSION, Buffer.from(JSON.stringify(message, null, 2)), this.sessionKey);
+    try {
+      // Indented, as the hub's own serialiser writes it: a compact body is refused in silence.
+      await this.sendFrame(MSG_TYPE_SESSION, Buffer.from(JSON.stringify(message, null, 2)), this.sessionKey);
+    } catch (error) {
+      // Nothing will ever answer a request that never left, so settle it here rather than leave
+      // its rejection to surface later with nobody listening.
+      const waiting = this.pending.get(seq);
+      if (waiting) {
+        clearTimeout(waiting.timer);
+        this.pending.delete(seq);
+        waiting.reject(error);
+      }
+    }
+
     return answer;
   }
 

@@ -1,0 +1,21 @@
+{
+  "name": "homebridge-aqara-matter",
+  "version": "0.1.0",
+  "description": "Aqara devices in HomeKit and Matter, over the local LANLink protocol",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "homebridge": "^1.8.0 || ^2.0.0",
+    "node": "^20 || ^22 || ^24"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "homebridge-plugin",
+    "aqara",
+    "matter",
+    "lanlink"
+  ],
+  "license": "MIT"
+}
